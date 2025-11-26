@@ -64,7 +64,7 @@ def create_splits(dataset_path, train_ratio=0.6, test_ratio=0.2, seed=42):
     splits = {"train": train_files, "val": val_files, "test": test_files}
 
     # Save
-    project_root = Path(__file__).resolve().parents[3]
+    project_root = Path(__file__).resolve().parents[2]
     output_path = project_root / "splits.json"
     with open(output_path, "w") as f:
         json.dump(splits, f, indent=4)
