@@ -27,10 +27,6 @@ def get_proposals(img_path, max_size=800):
     # 3. Scale back to original size
     proposals = []
     for x, y, w, h in rects:
-        # Filter small noise
-        if w < 20 or h < 20:
-            continue
-
         real_box = [
             int(x / scale),
             int(y / scale),
