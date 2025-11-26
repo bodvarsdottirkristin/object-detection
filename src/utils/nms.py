@@ -1,5 +1,5 @@
 import numpy as np
-from IoU import iou 
+from IoU import iou
 
 
 def nms(boxes, scores, iou_thresh=0.5, score_thresh=0.0):
@@ -48,12 +48,14 @@ def nms(boxes, scores, iou_thresh=0.5, score_thresh=0.0):
 # ===== Example usage =====
 if __name__ == "__main__":
     # 4 boxes [x1, y1, x2, y2]
-    boxes = np.array([
-        [10, 10, 50, 50],      # Box A
-        [12, 12, 48, 48],      # Box B (very close to A)
-        [100, 100, 150, 150],  # Box C (separate)
-        [105, 105, 148, 148]   # Box D (overlaps with C)
-    ])
+    boxes = np.array(
+        [
+            [10, 10, 50, 50],  # Box A
+            [12, 12, 48, 48],  # Box B (very close to A)
+            [100, 100, 150, 150],  # Box C (separate)
+            [105, 105, 148, 148],  # Box D (overlaps with C)
+        ]
+    )
 
     # Confidence scores for each box
     scores = np.array([0.9, 0.85, 0.8, 0.6])

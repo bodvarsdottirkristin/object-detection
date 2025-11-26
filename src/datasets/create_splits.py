@@ -23,7 +23,9 @@ def create_splits(dataset_path, train_ratio=0.6, test_ratio=0.2, seed=42):
     if train_ratio < 0 or test_ratio < 0:
         raise ValueError("train_ratio and test_ratio must be non-negative")
     if train_ratio + test_ratio >= 1.0:
-        raise ValueError("train_ratio + test_ratio must be < 1.0 (some remainder needed for validation)")
+        raise ValueError(
+            "train_ratio + test_ratio must be < 1.0 (some remainder needed for validation)"
+        )
 
     # Collect image files that have matching XML annotation
     all_images = []

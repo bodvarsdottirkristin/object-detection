@@ -4,6 +4,7 @@ from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+
 def save_checkpoint(state, checkpoint_dir, filename="checkpoint.pth", is_best=False):
     """Save model checkpoint. state should include:
     'model_state_dict', 'optimizer_state_dict', 'epoch', and optionally 'best_map'.
