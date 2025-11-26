@@ -1,5 +1,4 @@
 import pickle
-import xml.etree.ElementTree as ET
 from pathlib import Path
 from tqdm import tqdm
 
