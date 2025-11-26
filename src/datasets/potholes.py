@@ -6,7 +6,7 @@ from PIL import Image
 import numpy as np
 
 
-class PotholeDataset(Dataset):
+class Potholes(Dataset):
     def __init__(self, db_path, transform=None):
         with open(db_path, "rb") as f:
             self.samples = pickle.load(f)
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         ]
     )
 
-    dataset = PotholeDataset("src/datasets/proposals/train_db.pkl", transform=tfs)
+    dataset = Potholes("src/datasets/proposals/train_db.pkl", transform=tfs)
     loader = DataLoader(dataset, batch_size=32, shuffle=True)
 
     images, labels = next(iter(loader))

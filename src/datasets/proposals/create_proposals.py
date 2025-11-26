@@ -70,7 +70,7 @@ def main():
         with open(save_path, "wb") as f:
             pickle.dump(split_proposals, f)
 
-        print(f"✓ Saved {split_name} proposals to {save_path}")
+        print(f"Saved {split_name} proposals to {save_path}")
 
 
 if __name__ == "__main__":

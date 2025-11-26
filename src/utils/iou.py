@@ -1,4 +1,4 @@
-def iou(box1, box2):
+def compute_iou(box1, box2):
     # Coordinates of the intersection rectangle
     x1 = max(box1[0], box2[0])
     y1 = max(box1[1], box2[1])
