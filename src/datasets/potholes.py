@@ -56,7 +56,7 @@ if __name__ == "__main__":
         ]
     )
 
-    dataset = PotholeDataset("./scratch/train_db.pkl", transform=tfs)
+    dataset = PotholeDataset("src/datasets/proposals/train_db.pkl", transform=tfs)
     loader = DataLoader(dataset, batch_size=32, shuffle=True)
 
     images, labels = next(iter(loader))

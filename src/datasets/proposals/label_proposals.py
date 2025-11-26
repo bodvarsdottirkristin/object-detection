@@ -9,8 +9,8 @@ from src.utils.iou import compute_iou
 
 def main():
     base_path = Path("/dtu/datasets1/02516/potholes/")
-    proposals_path = "./scratch/proposals.pkl"
-    output_db_path = "./scratch/train_db.pkl"
+    proposals_path = Path("src/datasets/proposals/proposals_train.pkl")
+    output_db_path = Path("src/datasets/proposals/train_db.pkl")
 
     with open(proposals_path, "rb") as f:
         raw_proposals = pickle.load(f)
