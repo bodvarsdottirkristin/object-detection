@@ -49,7 +49,7 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Load Splits
-    with open(base_path / "splits.json") as f:
+    with open("splits.json") as f:
         splits = json.load(f)
 
     # Iterate over Train, Val, and Test
