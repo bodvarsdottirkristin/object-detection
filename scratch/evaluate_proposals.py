@@ -269,8 +269,8 @@ class ProposalEvaluator:
 # Run evaluation
 if __name__ == "__main__":
     DATASET_PATH = "/dtu/datasets1/02516/potholes/"
-    PROPOSALS_DIR = "/zhome/e2/6/224426/project/object-detection-1/scratch/proposals"
-    OUTPUT_DIR = "/zhome/e2/6/224426/project/object-detection-1/scratch/evaluation"
+    PROPOSALS_DIR = "/zhome/e2/6/224426/project/object-detection/scratch/proposals"
+    OUTPUT_DIR = "/zhome/e2/6/224426/project/object-detection/scratch/evaluation"
     
     print("="*70)
     print("PROPOSAL EVALUATION - PROJECT 4.1.3")

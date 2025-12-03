@@ -258,8 +258,9 @@ class PotholesDataset:
 # Example usage
 if __name__ == "__main__":
     DATASET_PATH = "/dtu/datasets1/02516/potholes/"
-    SPLITS_PATH = "/zhome/e2/6/224426/project/object-detection-1/scratch/splits.json"
-    OUTPUT_DIR = "/zhome/e2/6/224426/project/object-detection-1/scratch/visualizations"
+    SPLITS_PATH = "/zhome/e2/6/224426/project/object-detection/scratch/splits.json"
+    OUTPUT_DIR = "/zhome/e2/6/224426/project/object-detection/scratch/visualizations"
+
     
     # Create output directory if it doesn't exist
     Path(OUTPUT_DIR).mkdir(parents=True, exist_ok=True)

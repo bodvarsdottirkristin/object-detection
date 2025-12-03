@@ -3,24 +3,24 @@
     "split": "train",
     "num_processed": 399,
     "num_failed": 0,
-    "total_proposals": 214176,
-    "avg_proposals": 536.781954887218,
+    "total_proposals": 309210,
+    "avg_proposals": 774.9624060150376,
     "failed_images": []
   },
   "val": {
     "split": "val",
     "num_processed": 133,
     "num_failed": 0,
-    "total_proposals": 81324,
-    "avg_proposals": 611.4586466165414,
+    "total_proposals": 117339,
+    "avg_proposals": 882.2481203007519,
     "failed_images": []
   },
   "test": {
     "split": "test",
     "num_processed": 133,
     "num_failed": 0,
-    "total_proposals": 75972,
-    "avg_proposals": 571.218045112782,
+    "total_proposals": 108167,
+    "avg_proposals": 813.2857142857143,
     "failed_images": []
   }
 }

@@ -79,10 +79,7 @@ class SelectiveSeach:
             x, y, w, h = prop
             x2 = x + w
             y2 = y + h
-            
-            # Filter out very small proposals (less than 20x20)
-            if w >= 20 and h >= 20:
-                proposals_list.append([x, y, x2, y2])
+            proposals_list.append([x, y, x2, y2])
         
         return proposals_list
     
@@ -318,8 +315,8 @@ class PotholesProposal(Dataset):
 # Run extraction
 if __name__ == "__main__":
     DATASET_PATH = "/dtu/datasets1/02516/potholes/"
-    SPLITS_PATH = "/zhome/e2/6/224426/project/object-detection-1/splits.json"
-    OUTPUT_DIR = "/zhome/e2/6/224426/project/object-detection-1/scratch/proposals"
+    SPLITS_PATH = "/zhome/e2/6/224426/project/object-detection/splits.json"
+    OUTPUT_DIR = "/zhome/e2/6/224426/project/object-detection/scratch/proposals"
     MAX_IMG_SIZE = 800
     
     print("="*60)
