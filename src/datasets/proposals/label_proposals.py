@@ -58,3 +58,6 @@ def main():
     print(f"Positives: {pos_count}, Negatives: {neg_count}")
     with open(output_db_path, "wb") as f:
         pickle.dump(labeled_data, f)
+
+if __name__ == "__main__":
+    main()
