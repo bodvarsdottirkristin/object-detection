@@ -3,11 +3,15 @@ import json
 import os
 import xml.etree.ElementTree as ET
 import matplotlib.pyplot as plt
+import seaborn as sns
 import numpy as np
 from tqdm import tqdm
 from pathlib import Path
 
 from src.datasets.parse_xml import parse_pothole_xml
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 # --- Configuration ---
 DATASET_PATH = Path("/dtu/datasets1/02516/potholes/")
@@ -48,7 +52,7 @@ def _compute_iou_matrix(proposals, gt_boxes):
 
 def main():
     # 1. Load Proposals
-    print(f"Loading proposals from {PROPOSALS_PATH}...")
+    logger.info(f"Loading proposals from {PROPOSALS_PATH}...")
     with open(PROPOSALS_PATH, 'rb') as f:
         all_proposals = pickle.load(f)
 
@@ -58,7 +62,7 @@ def main():
     # Store how many GTs are detected at each k level
     detected_counts = {k: 0 for k in k_values}
 
-    print("Evaluating Recall...")
+    logger.info("Evaluating Recall...")
     for img_name, proposals in tqdm(all_proposals.items()):
         # Load GT
         xml_path = DATASET_PATH / 'annotations' / img_name.replace('.png', '.xml')
@@ -86,22 +90,21 @@ def main():
     # 3. Calculate and Plot Results
     recalls = [detected_counts[k] / total_gt_objects for k in k_values]
     
-    print("\n--- Results ---")
-    print(f"Total Ground Truth Potholes: {total_gt_objects}")
+    logger.info(f"Total Ground Truth Potholes: {total_gt_objects}")
     for k, rec in zip(k_values, recalls):
-        print(f"Top {k} proposals: Recall = {rec:.4f} ({rec*100:.2f}%)")
+        logger.info(f"Top {k} proposals: Recall = {rec:.4f} ({rec*100:.2f}%)")
 
-    # Plot
+    # Plot with seaborn styling
+    sns.set_style("whitegrid")
+    sns.set_palette("muted")
+    
     plt.figure(figsize=(8, 6))
     plt.plot(k_values, recalls, marker='o', linewidth=2)
     plt.title(f'Recall vs Number of Proposals (IoU >= {IOU_THRESHOLD})')
     plt.xlabel('Number of Proposals (k)')
     plt.ylabel('Recall')
-    plt.grid(True)
-    plt.axhline(y=0.90, color='r', linestyle='--', label='90% Target')
-    plt.legend()
-    plt.savefig('recall_plot.png')
-    print("\n✓ Plot saved to recall_plot.png")
+    plt.savefig('media/recall_plot.png')
+    logger.info("Plot saved to recall_plot.png")
 
 if __name__ == "__main__":
     main()
