@@ -1,5 +1,5 @@
 import numpy as np
-from iou import iou
+from src.utils.iou import iou
 
 
 def nms(boxes, scores, iou_thresh=0.5, score_thresh=0.0):
