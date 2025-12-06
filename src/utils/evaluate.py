@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+from torch.amp import autocast
 from sklearn.metrics import roc_auc_score, average_precision_score
 from src.utils.logger import get_logger
 
@@ -52,6 +53,7 @@ class EvaluationMetrics:
 def evaluate_model(model, dataloader, criterion, device):
     model.eval()
     running_loss = 0.0
+    device = 'cuda' if device.type == 'cuda' else 'cpu'
     
     # Containers for global metric calculation
     all_targets = []
@@ -66,12 +68,14 @@ def evaluate_model(model, dataloader, criterion, device):
 
     with torch.no_grad():
         for inputs, targets in dataloader:
-            inputs = inputs.to(device)
-            targets = targets.to(device) # Assuming float for BCE, long for CE
+            inputs = inputs.to(device, non_blocking=True)
+            targets = targets.to(device, non_blocking=True)
 
-            # Forward pass
-            outputs = model(inputs)
-            loss = criterion(outputs, targets.unsqueeze(1))
+            # Forward pass with AMP
+            with autocast(device_type=device):
+                outputs = model(inputs)
+                loss = criterion(outputs, targets.unsqueeze(1))
+            
             running_loss += loss.item() * inputs.size(0)
 
             # Calculate Probabilities and Predictions (Assuming Binary Classification)
@@ -83,7 +87,6 @@ def evaluate_model(model, dataloader, criterion, device):
             all_probs.extend(probs.cpu().numpy())
 
             # Update Raw Counters
-            # We use logical operations to count TP, TN, FP, FN
             tp += ((preds == 1) & (targets == 1)).sum().item()
             tn += ((preds == 0) & (targets == 0)).sum().item()
             fp += ((preds == 1) & (targets == 0)).sum().item()
