@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.optim as optim
 import json
 import os
+import numpy as np
 from pathlib import Path
 from src.models.pothole_ResNet import PotholeClassifier
 from src.datasets.potholes import ProposalDataset
@@ -23,7 +24,7 @@ if __name__ == "__main__":
     PROPOSALS_DIR = "scratch/proposals"
     SPLITS_PATH = "splits.json"
     NUM_EPOCHS = int(os.getenv('NUM_EPOCHS', 50))
-    BATCH_SIZE = int(os.getenv('BATCH_SIZE', 32))
+    BATCH_SIZE = int(os.getenv('BATCH_SIZE', 64))
     LEARNING_RATE = float(os.getenv('LEARNING_RATE', 0.001))
     CHECKPOINT_DIR = "models/checkpoints"
     
@@ -37,7 +38,7 @@ if __name__ == "__main__":
     
     # Load data
     print("Loading data...")
-    train_loader, val_loader, test_loader, _ = ProposalDataset.get_dataloaders(
+    train_loader, val_loader, test_loader, train_dataset = ProposalDataset.get_dataloaders(
         DATASET_PATH, PROPOSALS_DIR, SPLITS_PATH, batch_size=BATCH_SIZE
     )
     print(f"Train: {len(train_loader)} batches | Val: {len(val_loader)} batches\n")
@@ -46,8 +47,26 @@ if __name__ == "__main__":
     print("Creating model...")
     model = PotholeClassifier(num_classes=2, pretrained=True).to(device)
     
-    # Setup training
-    criterion = nn.CrossEntropyLoss()
+    # Setup training with class weighting
+    print("Computing class weights...")
+    # Get class weights from training dataset
+    labels = []
+    for img_file in train_dataset.labels_dict.keys():
+        labels.extend(train_dataset.labels_dict[img_file])
+    
+    labels = np.array(labels)
+    class_counts = np.bincount(labels)
+    class_weights = 1.0 / class_counts
+    class_weights = class_weights / class_weights.sum() * len(class_weights)
+    class_weights = torch.tensor(class_weights, dtype=torch.float32).to(device)
+    
+    print(f"Class weights for loss function:")
+    print(f"  Background: {class_weights[0]:.4f}")
+    print(f"  Pothole:    {class_weights[1]:.4f}")
+    print(f"  Ratio:      {class_weights[1]/class_weights[0]:.1f}x (pothole is more important)\n")
+    
+    # Create loss with class weights (handles class imbalance)
+    criterion = nn.CrossEntropyLoss(weight=class_weights)
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
     early_stopping = EarlyStopping(patience=10, mode="max", delta=0.01, verbose=True)
     

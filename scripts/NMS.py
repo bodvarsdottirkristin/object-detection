@@ -9,41 +9,47 @@ def nms(boxes, scores, iou_thresh=0.5, score_thresh=0.0):
     iou_thresh: IoU threshold for suppression
     score_thresh: discard boxes with very low score
     """
+    boxes = np.array(boxes)
+    scores = np.array(scores)
 
     # Filter out boxes with low confidence
-    keep = scores >= score_thresh
-    boxes = boxes[keep]
-    scores = scores[keep]
+    keep_mask = scores >= score_thresh
+    
+    if not np.any(keep_mask):
+        return np.array([], dtype=int)
+    
+    # Get original indices of boxes that pass the score threshold
+    original_indices = np.where(keep_mask)[0]
+    filtered_boxes = boxes[keep_mask]
+    filtered_scores = scores[keep_mask]
 
     # If nothing is left after filtering
-    if len(scores) == 0:
-        return []
+    if len(filtered_scores) == 0:
+        return np.array([], dtype=int)
 
-    # Get indices sorted by descending score
-    indices = np.argsort(scores)[::-1]
+    # Get indices sorted by descending score (for filtered arrays)
+    indices = np.argsort(filtered_scores)[::-1]
 
-    selected_indices = []
+    selected_filtered_indices = []
 
     while len(indices) > 0:
         # Take the index of the box with the highest score
         current = indices[0]
-        selected_indices.append(current)
+        selected_filtered_indices.append(current)
 
         remaining = []
         # Compare this box with the remaining boxes
         for idx in indices[1:]:
-            iou_val = iou(boxes[current], boxes[idx])
+            iou_val = iou(filtered_boxes[current], filtered_boxes[idx])
             # Keep boxes that do not overlap too much
             if iou_val <= iou_thresh:
                 remaining.append(idx)
 
         indices = np.array(remaining, dtype=int)
 
-    # Returns indices with respect to the filtered arrays
-    # If you need indices with respect to the original arrays,
-    # you should keep a mapping from original to filtered indices.
-    return selected_indices
-
+    # Convert filtered indices back to original indices
+    keep_indices = original_indices[selected_filtered_indices]
+    return keep_indices
 
 # ===== Example usage =====
 if __name__ == "__main__":

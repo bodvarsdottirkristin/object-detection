@@ -7,7 +7,7 @@ from torchvision import models
 class PotholeClassifier(nn.Module):
     """
     Transfer learning classifier for pothole vs background proposals.
-    Uses ResNet18 backbone for binary classification.
+    Uses ResNet50 backbone for binary classification.
     """
     
     def __init__(self, num_classes=2, pretrained=True):
@@ -21,7 +21,7 @@ class PotholeClassifier(nn.Module):
         super(PotholeClassifier, self).__init__()
         
         # Load pretrained ResNet18
-        backbone = models.resnet18(pretrained=pretrained)
+        backbone = models.resnet50(pretrained=pretrained)
         
         # Replace final layer for binary classification
         num_features = backbone.fc.in_features
