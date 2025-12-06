@@ -16,7 +16,7 @@ from PIL import Image
 from src.models.pothole_classifier import PotholeClassifier
 from src.datasets.parse_xml import parse_pothole_xml
 from src.utils.nms import nms
-from src.utils.iou import iou
+from src.utils.iou import compute_iou
 from src.utils.checkpoints import load_checkpoint
 from src.utils.logger import get_logger
 from src.utils.transforms import get_val_transforms
@@ -25,7 +25,7 @@ from src.utils.transforms import get_val_transforms
 # Paths
 DATASET_PATH = Path("/dtu/datasets1/02516/potholes")
 PROPOSALS_PATH = "src/datasets/proposals/proposals_test.pkl"
-CHECKPOINT_PATH = "checkpoints/20251206_195721/best_model.pth" #NOTE: Update this to the trained model path to evaluate
+CHECKPOINT_PATH = "checkpoints/20251206_195414/best_model.pth" #NOTE: Update this to the trained model path to evaluate
 SPLITS_PATH = "splits.json"
 RESULTS_DIR = "results/"
 
@@ -34,9 +34,9 @@ NUM_CLASSES = 2
 DROPOUT_P = 0.5
 
 # Detection Hyperparameters
-SCORE_THRESHOLD = 0.5 # Confidence threshold for initial filtering
+SCORE_THRESHOLD = 0.0 # Confidence threshold for initial filtering
 NMS_IOU_THRESHOLD = 0.5 # IoU threshold for NMS
-DETECTION_IOU_THRESHOLDS = [0.5, 0.75] # IoU thresholds for mAP calculation
+DETECTION_IOU_THRESHOLDS = [0.1, 0.3, 0.5, 0.7] # IoU thresholds for mAP calculation
 
 # Data Configuration
 IMG_SIZE = (224, 224)
@@ -144,7 +144,7 @@ def match_detections_to_ground_truth(detections, det_scores, gt_boxes, iou_thres
             if gt_idx in matched_gt:
                 continue  # This GT already matched
             
-            iou_val = iou(det_box, gt_box)
+            iou_val = compute_iou(det_box, gt_box)
             if iou_val > best_iou:
                 best_iou = iou_val
                 best_gt_idx = gt_idx

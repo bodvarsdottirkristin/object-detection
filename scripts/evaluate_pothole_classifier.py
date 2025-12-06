@@ -20,7 +20,7 @@ from src.utils.transforms import get_val_transforms
 
 # Paths
 TEST_DB_PATH = "src/datasets/proposals/test_db.pkl"
-CHECKPOINT_PATH = "checkpoints/20251206_195106/best_model.pth"  # Best model from training
+CHECKPOINT_PATH = "checkpoints/20251206_195414/best_model.pth" #NOTE: Update this to the trained model path to evaluate
 RESULTS_DIR = "results/"
 
 # Model Architecture (must match training)
@@ -43,8 +43,10 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 logger = get_logger(__name__)
 
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-def save_results(metrics, results_dir, filename="test_results.json"):
+
+def save_results(metrics, results_dir, filename=f"{timestamp}_classification_results.json"):
     """Save evaluation results to JSON file."""
     results_dir = Path(results_dir)
     results_dir.mkdir(parents=True, exist_ok=True)
