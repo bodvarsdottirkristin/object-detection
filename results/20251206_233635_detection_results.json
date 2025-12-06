@@ -1,0 +1,30 @@
+{
+  "timestamp": "2025-12-06T23:44:26.216436",
+  "checkpoint": "checkpoints/20251206_195414/best_model.pth",
+  "test_set": "/dtu/datasets1/02516/potholes",
+  "num_test_images": 133,
+  "hyperparameters": {
+    "score_threshold": 0.0,
+    "nms_iou_threshold": 0.5,
+    "detection_iou_thresholds": [
+      0.1,
+      0.3,
+      0.5,
+      0.7
+    ]
+  },
+  "statistics": {
+    "total_ground_truth": 348,
+    "total_proposals": 108167,
+    "avg_proposals_per_image": 813.2857142857143,
+    "detections_before_nms": 108167,
+    "detections_after_nms": 40254,
+    "avg_detections_per_image": 302.6616541353383
+  },
+  "detection_metrics": {
+    "map_0.1": 0.542383059957953,
+    "map_0.3": 0.5163033241572159,
+    "map_0.5": 0.4224051311416485,
+    "map_0.7": 0.17389527234093177
+  }
+}

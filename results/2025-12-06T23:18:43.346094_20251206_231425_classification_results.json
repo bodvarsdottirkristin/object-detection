@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-12-06T23:18:43.346094",
+  "checkpoint": "checkpoints/20251206_195414/best_model.pth",
+  "test_set": "src/datasets/proposals/test_db.pkl",
+  "metrics": {
+    "loss": 0.01652857985465329,
+    "accuracy": 0.9773036138563518,
+    "auc": 0.9671299849318639,
+    "map_score": 0.6515093198327397,
+    "precision": 0.6641577060931899,
+    "recall": 0.549688519727084,
+    "f1_score": 0.6015257263431262,
+    "specificity": 0.9910588190388946
+  },
+  "confusion_matrix": {
+    "true_positives": 1853,
+    "true_negatives": 103859,
+    "false_positives": 937,
+    "false_negatives": 1518
+  }
+}
