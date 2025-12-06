@@ -20,7 +20,7 @@ def train_one_epoch(model, dataloader, criterion, optimizer, scaler, device, log
     total_samples = 0
     
     steps = len(dataloader)
-    device_type = 'cuda' if device.type == 'cuda' else 'cpu'
+    device = 'cuda' if device.type == 'cuda' else 'cpu'
 
     for i, (inputs, targets) in enumerate(dataloader):
         inputs = inputs.to(device, non_blocking=True)
@@ -28,7 +28,7 @@ def train_one_epoch(model, dataloader, criterion, optimizer, scaler, device, log
 
         optimizer.zero_grad(set_to_none=True)
 
-        with autocast(device_type=device_type):
+        with autocast(device_type=device):
             outputs = model(inputs)
             loss = criterion(outputs, targets.unsqueeze(1))
 
