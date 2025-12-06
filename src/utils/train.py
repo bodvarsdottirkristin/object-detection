@@ -59,10 +59,12 @@ def train_one_epoch(model, dataloader, criterion, optimizer, scaler, device, log
             current_loss = running_loss / total_samples
             current_acc = (tp + tn) / total_samples
 
-            logger.info(f"Batch {i+1}/{steps}] ")
-            logger.info(f"Loss: {current_loss:.4f} | ")
-            logger.info(f"Acc: {current_acc:.2%} | ")
-            logger.info(f"Speed: {img_per_sec:.1f} samples/s")
+            logger.info(
+                f"Batch {i+1}/{steps} | "
+                f"Loss: {current_loss:.4f} | "
+                f"Acc: {current_acc:.2%} | "
+                f"Speed: {img_per_sec:.1f} samples/s"
+            )
             
             batch_start_time = time.time()
 
