@@ -33,7 +33,8 @@ class FocalLoss(nn.Module):
 
         # 4. Apply Alpha Weighting
         if self.alpha is not None:
-            alpha_t = self.alpha[targets]
+            # Move alpha to same device as targets before indexing
+            alpha_t = self.alpha.to(targets.device)[targets]
             focal_loss = alpha_t * focal_loss
 
         # 5. Reduction

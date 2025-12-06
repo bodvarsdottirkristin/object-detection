@@ -3,12 +3,15 @@ Main Training Script for Pothole Classifier
 Optimized for NVIDIA L40S GPU (48GB)
 """
 
+import sys
 import torch
 import torch.nn as nn
 from datetime import datetime
 from torch.utils.data import DataLoader
 from torch.amp import GradScaler
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.models.pothole_classifier import PotholeClassifier
 from src.datasets.potholes import Potholes
@@ -35,7 +38,7 @@ DROPOUT_P = 0.5
 
 # Training Configuration
 NUM_EPOCHS = 100
-BATCH_SIZE = 128  # Optimized for L40S (48GB)
+BATCH_SIZE = 512 # NOTE: Change me based on GPU memory capacity!
 LEARNING_RATE = 1e-4
 WEIGHT_DECAY = 1e-4
 
@@ -56,7 +59,7 @@ EARLY_STOP_DELTA = 0.0
 
 # Data Configuration
 IMG_SIZE = (224, 224)
-NUM_WORKERS = 8  # Take advantage of multi-core CPU
+NUM_WORKERS = 8  # NOTE: Change me based on CPU cores available!
 PIN_MEMORY = True
 
 # Logging
@@ -182,7 +185,7 @@ def main():
         
         # Get current learning rate
         current_lr = optimizer.param_groups[0]['lr']
-        logger.info(f"Learning Rate: {current_lr:.6f}")
+        logger.info(f"Current learning rate: {current_lr:.6f}")
         
         # Train for one epoch
         train_metrics, train_time = train_one_epoch(
@@ -261,6 +264,7 @@ def main():
         logger.info(f"  Val AUC: {val_metrics.auc:.4f} | Val mAP: {val_metrics.map_score:.4f}")
         logger.info(f"  Val Precision: {val_metrics.precision:.4f} | Val Recall: {val_metrics.recall:.4f} | Val F1: {val_metrics.f1_score:.4f}")
         logger.info(f"  Best mAP so far: {best_map:.4f}")
+        logger.info(f"  Epoch Duration: {train_time:.2f}s")
         
         # Check for early stopping
         if early_stopping.stop:
