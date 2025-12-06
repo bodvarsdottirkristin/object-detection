@@ -81,26 +81,24 @@ def save_results(metrics, results_dir, filename="test_results.json"):
 
 def print_results_table(metrics):
     """Print nicely formatted results table."""
-    logger.info("\n" + "=" * 80)
     logger.info("TEST SET EVALUATION RESULTS")
-    logger.info("=" * 80)
     
     # Main metrics
-    logger.info("\n📊 Main Metrics:")
+    logger.info("\nMain Metrics:")
     logger.info(f"  Loss:           {metrics.loss:.4f}")
     logger.info(f"  Accuracy:       {metrics.accuracy:.2%}")
     logger.info(f"  AUC:            {metrics.auc:.4f}")
     logger.info(f"  mAP:            {metrics.map_score:.4f}")
     
     # Classification metrics
-    logger.info("\n📈 Classification Metrics:")
+    logger.info("\nClassification Metrics:")
     logger.info(f"  Precision:      {metrics.precision:.4f}")
     logger.info(f"  Recall:         {metrics.recall:.4f}")
     logger.info(f"  F1 Score:       {metrics.f1_score:.4f}")
     logger.info(f"  Specificity:    {metrics.specificity:.4f}")
     
     # Confusion matrix
-    logger.info("\n🔢 Confusion Matrix:")
+    logger.info("\nConfusion Matrix:")
     logger.info(f"  True Positives (TP):   {metrics.tp:>8,}")
     logger.info(f"  True Negatives (TN):   {metrics.tn:>8,}")
     logger.info(f"  False Positives (FP):  {metrics.fp:>8,}")
@@ -116,15 +114,10 @@ def print_results_table(metrics):
     logger.info(f"  Pothole detection rate: {metrics.tp/(metrics.tp + metrics.fn):.2%} (Recall)")
     logger.info(f"  Background rejection rate: {metrics.tn/(metrics.tn + metrics.fp):.2%} (Specificity)")
     
-    logger.info("=" * 80 + "\n")
-
 
 def main():
     """Main evaluation function."""
-    
-    logger.info("=" * 80)
     logger.info("Pothole Classifier - Test Set Evaluation")
-    logger.info("=" * 80)
     
     # Log device info
     if torch.cuda.is_available():
