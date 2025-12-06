@@ -5,6 +5,7 @@ Optimized for NVIDIA L40S GPU (48GB)
 
 import torch
 import torch.nn as nn
+from datetime import datetime
 from torch.utils.data import DataLoader
 from torch.amp import GradScaler
 from pathlib import Path
@@ -24,7 +25,7 @@ from src.utils.transforms import get_train_transforms, get_val_transforms
 # Paths
 TRAIN_DB_PATH = "src/datasets/proposals/train_db.pkl"
 VAL_DB_PATH = "src/datasets/proposals/val_db.pkl"
-CHECKPOINT_DIR = "checkpoints/"
+CHECKPOINT_DIR = f"checkpoints/{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
 # Model Architecture
 NUM_CLASSES = 2
@@ -249,7 +250,7 @@ def main():
         save_checkpoint(
             state=checkpoint_state,
             checkpoint_dir=checkpoint_dir,
-            filename=f"checkpoint_epoch_{epoch}.pth",
+            filename=f"{timestamp}_checkpoint.pth",
             is_best=is_best
         )
         
