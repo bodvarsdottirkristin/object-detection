@@ -1,5 +1,6 @@
 import time
 import torch
+from torch.amp import autocast
 
 from src.utils.evaluate import EvaluationMetrics
 from src.utils.logger import get_logger
@@ -34,8 +35,6 @@ def train_one_epoch(model, dataloader, criterion, optimizer, scaler, device, log
         scaler.scale(loss).backward()
         scaler.step(optimizer)
         scaler.update()
-
-        # --- Metrics & Logging ---
         
         # Update running loss
         batch_size = inputs.size(0)
