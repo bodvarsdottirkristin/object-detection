@@ -1,5 +1,5 @@
 import numpy as np
-from src.utils.iou import iou
+from src.utils.iou import compute_iou
 
 
 def nms(boxes, scores, iou_thresh=0.5, score_thresh=0.0):
@@ -32,7 +32,7 @@ def nms(boxes, scores, iou_thresh=0.5, score_thresh=0.0):
         remaining = []
         # Compare this box with the remaining boxes
         for idx in indices[1:]:
-            iou_val = iou(boxes[current], boxes[idx])
+            iou_val = compute_iou(boxes[current], boxes[idx])
             # Keep boxes that do not overlap too much
             if iou_val <= iou_thresh:
                 remaining.append(idx)
