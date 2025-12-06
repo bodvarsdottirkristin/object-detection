@@ -250,7 +250,7 @@ def main():
         save_checkpoint(
             state=checkpoint_state,
             checkpoint_dir=checkpoint_dir,
-            filename=f"{timestamp}_checkpoint.pth",
+            filename=f"latest.pth",
             is_best=is_best
         )
         
