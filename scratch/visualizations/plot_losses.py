@@ -15,12 +15,12 @@ df = pd.read_csv(CSV_FILE)
 
 plt.figure(figsize=(10, 6))
 
-# Plot train and val loss
-sns.lineplot(x="epoch", y="train_loss", data=df, label="Train Loss", linestyle="--")
-sns.lineplot(x="epoch", y="val_loss", data=df, label="Val Loss")
+# Plot train and val loss as solid lines
+sns.lineplot(x="epoch", y="train_loss", data=df, label="Train Loss", linestyle="-")
+sns.lineplot(x="epoch", y="val_loss", data=df, label="Val Loss", linestyle="-")
 
-# Early stopping vertical line
-plt.axvline(EARLY_STOP_EPOCH, color="orange", linestyle=":", linewidth=2, label="Early Stopping")
+# Early stopping vertical dashed line
+plt.axvline(EARLY_STOP_EPOCH, color="orange", linestyle="--", linewidth=2, label="Early Stopping")
 
 # Annotate early stopping
 plt.text(EARLY_STOP_EPOCH + 0.5, plt.ylim()[1]*0.95, "Early Stopping on mAP", color="orange", rotation=90, va="top", ha="left")
