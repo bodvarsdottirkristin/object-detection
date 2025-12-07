@@ -34,9 +34,9 @@ NUM_CLASSES = 2
 DROPOUT_P = 0.5
 
 # Detection Hyperparameters
-SCORE_THRESHOLD = 0.0 # Confidence threshold for initial filtering
+SCORE_THRESHOLD = 0.1 # Confidence threshold for initial filtering
 NMS_IOU_THRESHOLD = 0.5 # IoU threshold for NMS
-DETECTION_IOU_THRESHOLDS = [0.1, 0.3, 0.5, 0.7] # IoU thresholds for mAP calculation
+DETECTION_IOU_THRESHOLDS = [0.1, 0.3, 0.5, 0.75] # IoU thresholds for mAP calculation
 
 # Data Configuration
 IMG_SIZE = (224, 224)
