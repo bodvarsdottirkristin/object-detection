@@ -8,7 +8,7 @@
     "nms_iou_threshold": 0.5,
     "detection_iou_thresholds": [
       0.5,
-      0.75
+      0.7
     ]
   },
   "statistics": {
@@ -21,6 +21,6 @@
   },
   "detection_metrics": {
     "map_0.5": 0.3787646250574001,
-    "map_0.75": 0.09512649273927513
+    "map_0.7": 0.09512649273927513
   }
 }
