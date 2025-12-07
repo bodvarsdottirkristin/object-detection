@@ -1,0 +1,38 @@
+{
+  "train": {
+    "split": "train",
+    "num_images": 399,
+    "total_gt_boxes": 1020,
+    "total_proposals": 214176,
+    "total_positive_proposals": 8404,
+    "total_matched_gt": 725,
+    "avg_proposals_per_image": 536.781954887218,
+    "avg_positive_per_image": 21.06265664160401,
+    "recall": 0.8232707441132916,
+    "avg_iou": 0.7014730534798812
+  },
+  "val": {
+    "split": "val",
+    "num_images": 133,
+    "total_gt_boxes": 372,
+    "total_proposals": 81324,
+    "total_positive_proposals": 3391,
+    "total_matched_gt": 275,
+    "avg_proposals_per_image": 611.4586466165414,
+    "avg_positive_per_image": 25.49624060150376,
+    "recall": 0.8417442415562718,
+    "avg_iou": 0.6996274906425218
+  },
+  "test": {
+    "split": "test",
+    "num_images": 133,
+    "total_gt_boxes": 348,
+    "total_proposals": 75972,
+    "total_positive_proposals": 3164,
+    "total_matched_gt": 250,
+    "avg_proposals_per_image": 571.218045112782,
+    "avg_positive_per_image": 23.789473684210527,
+    "recall": 0.8298654649663751,
+    "avg_iou": 0.6968273364696324
+  }
+}

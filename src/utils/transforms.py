@@ -1,0 +1,26 @@
+from torchvision import transforms
+
+
+def get_train_transforms(img_size=(224, 224)):
+    """Return training data augmentation pipeline."""
+    return transforms.Compose(
+        [
+            transforms.Resize(img_size),
+            transforms.RandomHorizontalFlip(),
+            transforms.RandomRotation(10),
+            transforms.ColorJitter(brightness=0.2, contrast=0.2),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
+
+
+def get_val_transforms(img_size=(224, 224)):
+    """Return validation/test transforms (no augmentation)."""
+    return transforms.Compose(
+        [
+            transforms.Resize(img_size),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
